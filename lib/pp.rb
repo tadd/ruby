@@ -282,8 +282,13 @@ class PP < PrettyPrint
       group(1, '{', '}') {
         seplist(obj, nil, :each_pair) {|k, v|
           group {
-            pp k
-            text '=>'
+            if Symbol === k
+              text k
+              text ':'
+            else
+              pp k
+              text '=>'
+            end
             group(1) {
               breakable ''
               pp v
