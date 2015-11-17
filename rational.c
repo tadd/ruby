@@ -732,6 +732,7 @@ f_addsub(VALUE self, VALUE anum, VALUE aden, VALUE bnum, VALUE bden, int k)
     return f_rational_new_no_reduce2(CLASS_OF(self), num, den);
 }
 
+static VALUE nurat_to_f(VALUE self);
 /*
  * call-seq:
  *    rat + numeric  ->  numeric
@@ -757,7 +758,7 @@ nurat_add(VALUE self, VALUE other)
 	}
     }
     else if (RB_TYPE_P(other, T_FLOAT)) {
-	return f_add(f_to_f(self), other);
+	return DBL2NUM(RFLOAT_VALUE(nurat_to_f(self)) + RFLOAT_VALUE(other));
     }
     else if (RB_TYPE_P(other, T_RATIONAL)) {
 	{
