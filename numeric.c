@@ -2957,8 +2957,8 @@ fix_to_s(int argc, VALUE *argv, VALUE x)
  * +numeric+ and on the magnitude of the result. It may return a Bignum.
  */
 
-static VALUE
-fix_plus(VALUE x, VALUE y)
+VALUE
+rb_fix_plus(VALUE x, VALUE y)
 {
     if (FIXNUM_P(y)) {
 	long a, b, c;
@@ -4256,7 +4256,7 @@ Init_Numeric(void)
     rb_define_alias(rb_cFixnum, "inspect", "to_s");
 
     rb_define_method(rb_cFixnum, "-@", fix_uminus, 0);
-    rb_define_method(rb_cFixnum, "+", fix_plus, 1);
+    rb_define_method(rb_cFixnum, "+", rb_fix_plus, 1);
     rb_define_method(rb_cFixnum, "-", fix_minus, 1);
     rb_define_method(rb_cFixnum, "*", fix_mul, 1);
     rb_define_method(rb_cFixnum, "/", fix_div, 1);
