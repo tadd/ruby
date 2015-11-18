@@ -586,6 +586,7 @@ VALUE rb_fix2str(VALUE, int);
 VALUE rb_dbl_cmp(double, double);
 VALUE rb_fix_plus(VALUE, VALUE);
 VALUE rb_fix_mul(VALUE, VALUE);
+VALUE rb_fix_idiv(VALUE, VALUE);
 /* object.c */
 int rb_eql(VALUE, VALUE);
 VALUE rb_any_to_s(VALUE);
