@@ -27,6 +27,9 @@
 
 #define GMP_GCD_DIGITS 1
 
+#define INUM_PLUS(x, y) (FIXNUM_P(x) ? rb_fix_plus(x, y) : rb_big_plus(x, y))
+#define INUM_MUL(x, y) (FIXNUM_P(x) ? rb_fix_mul(x, y) : rb_big_mul(x, y))
+
 VALUE rb_cRational;
 
 static ID id_abs, id_cmp, id_convert, id_eqeq_p, id_expt, id_fdiv,
@@ -752,9 +755,8 @@ nurat_add(VALUE self, VALUE other)
 	{
 	    get_dat1(self);
 
-	    return f_addsub(self,
-			    dat->num, dat->den,
-			    other, ONE, '+');
+	    return f_rational_new_no_reduce2(CLASS_OF(self),
+					     INUM_PLUS(dat->num, INUM_MUL(other, dat->den)), dat->den);
 	}
     }
     else if (RB_TYPE_P(other, T_FLOAT)) {
