@@ -104,7 +104,6 @@ round(double x)
 #endif
 
 static VALUE fix_uminus(VALUE num);
-static VALUE fix_mul(VALUE x, VALUE y);
 static VALUE int_pow(long x, unsigned long y);
 
 static ID id_coerce, id_div, id_divmod;
@@ -3033,8 +3032,8 @@ fix_minus(VALUE x, VALUE y)
  * Bignum.
  */
 
-static VALUE
-fix_mul(VALUE x, VALUE y)
+VALUE
+rb_fix_mul(VALUE x, VALUE y)
 {
     if (FIXNUM_P(y)) {
 #ifdef __HP_cc
@@ -4258,7 +4257,7 @@ Init_Numeric(void)
     rb_define_method(rb_cFixnum, "-@", fix_uminus, 0);
     rb_define_method(rb_cFixnum, "+", rb_fix_plus, 1);
     rb_define_method(rb_cFixnum, "-", fix_minus, 1);
-    rb_define_method(rb_cFixnum, "*", fix_mul, 1);
+    rb_define_method(rb_cFixnum, "*", rb_fix_mul, 1);
     rb_define_method(rb_cFixnum, "/", fix_div, 1);
     rb_define_method(rb_cFixnum, "div", fix_idiv, 1);
     rb_define_method(rb_cFixnum, "%", fix_mod, 1);
