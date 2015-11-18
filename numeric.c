@@ -3207,8 +3207,8 @@ rb_fix_idiv(VALUE x, VALUE y)
  *  See Numeric#divmod for more information.
  */
 
-static VALUE
-fix_mod(VALUE x, VALUE y)
+VALUE
+rb_fix_modulo(VALUE x, VALUE y)
 {
     if (FIXNUM_P(y)) {
 	long mod;
@@ -4260,8 +4260,8 @@ Init_Numeric(void)
     rb_define_method(rb_cFixnum, "*", rb_fix_mul, 1);
     rb_define_method(rb_cFixnum, "/", fix_div, 1);
     rb_define_method(rb_cFixnum, "div", rb_fix_idiv, 1);
-    rb_define_method(rb_cFixnum, "%", fix_mod, 1);
-    rb_define_method(rb_cFixnum, "modulo", fix_mod, 1);
+    rb_define_method(rb_cFixnum, "%", rb_fix_modulo, 1);
+    rb_define_method(rb_cFixnum, "modulo", rb_fix_modulo, 1);
     rb_define_method(rb_cFixnum, "divmod", fix_divmod, 1);
     rb_define_method(rb_cFixnum, "fdiv", fix_fdiv, 1);
     rb_define_method(rb_cFixnum, "**", fix_pow, 1);
