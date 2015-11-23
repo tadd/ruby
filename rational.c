@@ -29,6 +29,10 @@
 
 #define INUM_PLUS(x, y) (FIXNUM_P(x) ? rb_fix_plus(x, y) : rb_big_plus(x, y))
 #define INUM_MUL(x, y) (FIXNUM_P(x) ? rb_fix_mul(x, y) : rb_big_mul(x, y))
+#define INUM_MOD(x, y) (FIXNUM_P(x) ? rb_fix_modulo(x, y) : rb_big_modulo(x, y))
+#define INUM_NEGATIVE_P(x) (FIXNUM_P(x) ? (FIX2LONG(x) < 0) : BIGNUM_NEGATIVE_P(x))
+#define INUM_NEGATE(x) (FIXNUM_P(x) ? LONG2NUM(-FIX2LONG(x)) : rb_big_uminus(x))
+#define INUM_ZERO_P(x) (FIXNUM_P(x) ? (FIX2LONG(x) == 0) : rb_bigzero_p(x))
 
 VALUE rb_cRational;
 
@@ -330,14 +334,14 @@ f_gcd_normal(VALUE x, VALUE y)
     if (FIXNUM_P(x) && FIXNUM_P(y))
 	return LONG2NUM(i_gcd(FIX2LONG(x), FIX2LONG(y)));
 
-    if (f_negative_p(x))
-	x = f_negate(x);
-    if (f_negative_p(y))
-	y = f_negate(y);
+    if (INUM_NEGATIVE_P(x))
+	x = INUM_NEGATE(x);
+    if (INUM_NEGATIVE_P(y))
+	y = INUM_NEGATE(y);
 
-    if (f_zero_p(x))
+    if (INUM_ZERO_P(x))
 	return y;
-    if (f_zero_p(y))
+    if (INUM_ZERO_P(y))
 	return x;
 
     for (;;) {
@@ -348,7 +352,7 @@ f_gcd_normal(VALUE x, VALUE y)
 		return LONG2NUM(i_gcd(FIX2LONG(x), FIX2LONG(y)));
 	}
 	z = x;
-	x = f_mod(y, x);
+	x = INUM_MOD(y, x);
 	y = z;
     }
     /* NOTREACHED */
