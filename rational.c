@@ -29,6 +29,7 @@
 
 #define INUM_PLUS(x, y) (FIXNUM_P(x) ? rb_fix_plus(x, y) : rb_big_plus(x, y))
 #define INUM_MUL(x, y) (FIXNUM_P(x) ? rb_fix_mul(x, y) : rb_big_mul(x, y))
+#define INUM_IDIV(x, y) (FIXNUM_P(x) ? rb_fix_idiv(x, y) : rb_big_idiv(x, y))
 #define INUM_MOD(x, y) (FIXNUM_P(x) ? rb_fix_modulo(x, y) : rb_big_modulo(x, y))
 #define INUM_NEGATIVE_P(x) (FIXNUM_P(x) ? (FIX2LONG(x) < 0) : BIGNUM_NEGATIVE_P(x))
 #define INUM_NEGATE(x) (FIXNUM_P(x) ? LONG2NUM(-FIX2LONG(x)) : rb_big_uminus(x))
@@ -709,32 +710,32 @@ f_addsub(VALUE self, VALUE anum, VALUE aden, VALUE bnum, VALUE bden, int k)
 	VALUE c;
 
 	if (k == '+')
-	    c = f_add(a, b);
+	    c = INUM_PLUS(a, b);
 	else
 	    c = f_sub(a, b);
 
-	b = f_idiv(aden, g);
+	b = INUM_IDIV(aden, g);
 	g = f_gcd(c, g);
-	num = f_idiv(c, g);
-	a = f_idiv(bden, g);
-	den = f_mul(a, b);
+	num = INUM_IDIV(c, g);
+	a = INUM_IDIV(bden, g);
+	den = INUM_MUL(a, b);
     }
     else {
 	VALUE g = f_gcd(aden, bden);
-	VALUE a = f_mul(anum, f_idiv(bden, g));
-	VALUE b = f_mul(bnum, f_idiv(aden, g));
+	VALUE a = INUM_MUL(anum, INUM_IDIV(bden, g));
+	VALUE b = INUM_MUL(bnum, INUM_IDIV(aden, g));
 	VALUE c;
 
 	if (k == '+')
-	    c = f_add(a, b);
+	    c = INUM_PLUS(a, b);
 	else
 	    c = f_sub(a, b);
 
-	b = f_idiv(aden, g);
+	b = INUM_IDIV(aden, g);
 	g = f_gcd(c, g);
-	num = f_idiv(c, g);
-	a = f_idiv(bden, g);
-	den = f_mul(a, b);
+	num = INUM_IDIV(c, g);
+	a = INUM_IDIV(bden, g);
+	den = INUM_MUL(a, b);
     }
     return f_rational_new_no_reduce2(CLASS_OF(self), num, den);
 }
