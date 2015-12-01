@@ -28,6 +28,7 @@
 #define GMP_GCD_DIGITS 1
 
 #define INUM_PLUS(x, y) (FIXNUM_P(x) ? rb_fix_plus(x, y) : rb_big_plus(x, y))
+#define INUM_MINUS(x, y) (FIXNUM_P(x) ? rb_fix_minus(x, y) : rb_big_minus(x, y))
 #define INUM_MUL(x, y) (FIXNUM_P(x) ? rb_fix_mul(x, y) : rb_big_mul(x, y))
 #define INUM_IDIV(x, y) (FIXNUM_P(x) ? rb_fix_idiv(x, y) : rb_big_idiv(x, y))
 #define INUM_MOD(x, y) (FIXNUM_P(x) ? rb_fix_modulo(x, y) : rb_big_modulo(x, y))
@@ -800,9 +801,8 @@ nurat_sub(VALUE self, VALUE other)
 	{
 	    get_dat1(self);
 
-	    return f_addsub(self,
-			    dat->num, dat->den,
-			    other, ONE, '-');
+	    return f_rational_new_no_reduce2(CLASS_OF(self),
+					     INUM_MINUS(dat->num, INUM_MUL(other, dat->den)), dat->den);
 	}
     }
     else if (RB_TYPE_P(other, T_FLOAT)) {
