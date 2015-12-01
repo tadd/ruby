@@ -713,7 +713,7 @@ f_addsub(VALUE self, VALUE anum, VALUE aden, VALUE bnum, VALUE bden, int k)
 	if (k == '+')
 	    c = INUM_PLUS(a, b);
 	else
-	    c = f_sub(a, b);
+	    c = INUM_MINUS(a, b);
 
 	b = INUM_IDIV(aden, g);
 	g = f_gcd(c, g);
@@ -730,7 +730,7 @@ f_addsub(VALUE self, VALUE anum, VALUE aden, VALUE bnum, VALUE bden, int k)
 	if (k == '+')
 	    c = INUM_PLUS(a, b);
 	else
-	    c = f_sub(a, b);
+	    c = INUM_MINUS(a, b);
 
 	b = INUM_IDIV(aden, g);
 	g = f_gcd(c, g);
