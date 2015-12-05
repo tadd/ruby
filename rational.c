@@ -855,8 +855,8 @@ f_muldiv(VALUE self, VALUE anum, VALUE aden, VALUE bnum, VALUE bden, int k)
 	VALUE g1 = f_gcd(anum, bden);
 	VALUE g2 = f_gcd(aden, bnum);
 
-	num = f_mul(f_idiv(anum, g1), f_idiv(bnum, g2));
-	den = f_mul(f_idiv(aden, g2), f_idiv(bden, g1));
+	num = INUM_MUL(INUM_IDIV(anum, g1), INUM_IDIV(bnum, g2));
+	den = INUM_MUL(INUM_IDIV(aden, g2), INUM_IDIV(bden, g1));
     }
     return f_rational_new_no_reduce2(CLASS_OF(self), num, den);
 }
