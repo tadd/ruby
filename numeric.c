@@ -3317,8 +3317,8 @@ rb_int_positive_pow(long x, unsigned long y)
  *    2 ** 0.5    #=> 1.4142135623731
  */
 
-static VALUE
-fix_pow(VALUE x, VALUE y)
+VALUE
+rb_fix_pow(VALUE x, VALUE y)
 {
     long a = FIX2LONG(x);
 
@@ -4264,7 +4264,7 @@ Init_Numeric(void)
     rb_define_method(rb_cFixnum, "modulo", rb_fix_modulo, 1);
     rb_define_method(rb_cFixnum, "divmod", fix_divmod, 1);
     rb_define_method(rb_cFixnum, "fdiv", fix_fdiv, 1);
-    rb_define_method(rb_cFixnum, "**", fix_pow, 1);
+    rb_define_method(rb_cFixnum, "**", rb_fix_pow, 1);
 
     rb_define_method(rb_cFixnum, "abs", fix_abs, 0);
     rb_define_method(rb_cFixnum, "magnitude", fix_abs, 0);
