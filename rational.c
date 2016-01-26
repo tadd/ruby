@@ -32,6 +32,7 @@
 #define INUM_MUL(x, y) (FIXNUM_P(x) ? rb_fix_mul(x, y) : rb_big_mul(x, y))
 #define INUM_IDIV(x, y) (FIXNUM_P(x) ? rb_fix_idiv(x, y) : rb_big_idiv(x, y))
 #define INUM_MOD(x, y) (FIXNUM_P(x) ? rb_fix_modulo(x, y) : rb_big_modulo(x, y))
+#define INUM_POW(x, y) (FIXNUM_P(x) ? rb_fix_pow(x, y) : rb_big_pow(x, y))
 #define INUM_NEGATIVE_P(x) (FIXNUM_P(x) ? (FIX2LONG(x) < 0) : BIGNUM_NEGATIVE_P(x))
 #define INUM_NEGATE(x) (FIXNUM_P(x) ? LONG2NUM(-FIX2LONG(x)) : rb_big_uminus(x))
 #define INUM_ZERO_P(x) (FIXNUM_P(x) ? (FIX2LONG(x) == 0) : rb_bigzero_p(x))
@@ -1034,12 +1035,12 @@ nurat_expt(VALUE self, VALUE other)
 
 	    switch (FIX2INT(f_cmp(other, ZERO))) {
 	      case 1:
-		num = f_expt(dat->num, other);
-		den = f_expt(dat->den, other);
+		num = INUM_POW(dat->num, other);
+		den = INUM_POW(dat->den, other);
 		break;
 	      case -1:
-		num = f_expt(dat->den, f_negate(other));
-		den = f_expt(dat->num, f_negate(other));
+		num = INUM_POW(dat->den, INUM_NEGATE(other));
+		den = INUM_POW(dat->num, INUM_NEGATE(other));
 		break;
 	      default:
 		num = ONE;
@@ -1051,10 +1052,10 @@ nurat_expt(VALUE self, VALUE other)
     }
     else if (RB_TYPE_P(other, T_BIGNUM)) {
 	rb_warn("in a**b, b may be too big");
-	return f_expt(f_to_f(self), other);
+	return rb_float_pow(nurat_to_f(self), other);
     }
     else if (RB_TYPE_P(other, T_FLOAT) || RB_TYPE_P(other, T_RATIONAL)) {
-	return f_expt(f_to_f(self), other);
+	return rb_float_pow(nurat_to_f(self), other);
     }
     else {
 	return rb_num_coerce_bin(self, other, id_expt);
