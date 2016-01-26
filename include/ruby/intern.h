@@ -590,6 +590,7 @@ VALUE rb_fix_mul(VALUE, VALUE);
 VALUE rb_fix_idiv(VALUE, VALUE);
 VALUE rb_fix_modulo(VALUE, VALUE);
 VALUE rb_fix_pow(VALUE, VALUE);
+VALUE rb_float_pow(VALUE, VALUE);
 /* object.c */
 int rb_eql(VALUE, VALUE);
 VALUE rb_any_to_s(VALUE);
