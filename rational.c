@@ -33,6 +33,7 @@
 #define INUM_IDIV(x, y) (FIXNUM_P(x) ? rb_fix_idiv(x, y) : rb_big_idiv(x, y))
 #define INUM_MOD(x, y) (FIXNUM_P(x) ? rb_fix_modulo(x, y) : rb_big_modulo(x, y))
 #define INUM_POW(x, y) (FIXNUM_P(x) ? rb_fix_pow(x, y) : rb_big_pow(x, y))
+#define INUM_CMP(x, y) (FIXNUM_P(x) ? rb_fix_cmp(x, y) : rb_big_cmp(x, y))
 #define INUM_NEGATIVE_P(x) (FIXNUM_P(x) ? (FIX2LONG(x) < 0) : BIGNUM_NEGATIVE_P(x))
 #define INUM_NEGATE(x) (FIXNUM_P(x) ? LONG2NUM(-FIX2LONG(x)) : rb_big_uminus(x))
 #define INUM_ZERO_P(x) (FIXNUM_P(x) ? (FIX2LONG(x) == 0) : rb_bigzero_p(x))
@@ -1084,11 +1085,11 @@ nurat_cmp(VALUE self, VALUE other)
 	    get_dat1(self);
 
 	    if (FIXNUM_P(dat->den) && FIX2LONG(dat->den) == 1)
-		return f_cmp(dat->num, other); /* c14n */
-	    return f_cmp(self, f_rational_new_bang1(CLASS_OF(self), other));
+		return INUM_CMP(dat->num, other); /* c14n */
+	    other = f_rational_new_bang1(CLASS_OF(self), other);
 	}
     }
-    else if (RB_TYPE_P(other, T_FLOAT)) {
+    if (RB_TYPE_P(other, T_FLOAT)) {
 	return rb_dbl_cmp(RFLOAT_VALUE(nurat_to_f(self)), RFLOAT_VALUE(other));
     }
     else if (RB_TYPE_P(other, T_RATIONAL)) {
