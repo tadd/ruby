@@ -3411,8 +3411,8 @@ fix_equal(VALUE x, VALUE y)
  *  +nil+ is returned if the two values are incomparable.
  */
 
-static VALUE
-fix_cmp(VALUE x, VALUE y)
+VALUE
+rb_fix_cmp(VALUE x, VALUE y)
 {
     if (x == y) return INT2FIX(0);
     if (FIXNUM_P(y)) {
@@ -4271,7 +4271,7 @@ Init_Numeric(void)
 
     rb_define_method(rb_cFixnum, "==", fix_equal, 1);
     rb_define_method(rb_cFixnum, "===", fix_equal, 1);
-    rb_define_method(rb_cFixnum, "<=>", fix_cmp, 1);
+    rb_define_method(rb_cFixnum, "<=>", rb_fix_cmp, 1);
     rb_define_method(rb_cFixnum, ">",  fix_gt, 1);
     rb_define_method(rb_cFixnum, ">=", fix_ge, 1);
     rb_define_method(rb_cFixnum, "<",  fix_lt, 1);
