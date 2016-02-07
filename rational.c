@@ -80,20 +80,6 @@ f_add(VALUE x, VALUE y)
 }
 
 inline static VALUE
-f_cmp(VALUE x, VALUE y)
-{
-    if (FIXNUM_P(x) && FIXNUM_P(y)) {
-	long c = FIX2LONG(x) - FIX2LONG(y);
-	if (c > 0)
-	    c = 1;
-	else if (c < 0)
-	    c = -1;
-	return INT2FIX(c);
-    }
-    return rb_funcall(x, id_cmp, 1, y);
-}
-
-inline static VALUE
 f_div(VALUE x, VALUE y)
 {
     if (FIXNUM_P(y) && FIX2LONG(y) == 1)
@@ -454,7 +440,7 @@ nurat_s_new_bang(int argc, VALUE *argv, VALUE klass)
 	if (!k_integer_p(den))
 	    den = f_to_i(den);
 
-	switch (FIX2INT(f_cmp(den, ZERO))) {
+	switch (FIX2INT(INUM_CMP(den, ZERO))) {
 	  case -1:
 	    num = f_negate(num);
 	    den = f_negate(den);
@@ -513,7 +499,7 @@ nurat_s_canonicalize_internal(VALUE klass, VALUE num, VALUE den)
 {
     VALUE gcd;
 
-    switch (FIX2INT(f_cmp(den, ZERO))) {
+    switch (FIX2INT(INUM_CMP(den, ZERO))) {
       case -1:
 	num = f_negate(num);
 	den = f_negate(den);
@@ -537,7 +523,7 @@ nurat_s_canonicalize_internal(VALUE klass, VALUE num, VALUE den)
 inline static VALUE
 nurat_s_canonicalize_internal_no_reduce(VALUE klass, VALUE num, VALUE den)
 {
-    switch (FIX2INT(f_cmp(den, ZERO))) {
+    switch (FIX2INT(INUM_CMP(den, ZERO))) {
       case -1:
 	num = f_negate(num);
 	den = f_negate(den);
@@ -1017,7 +1003,7 @@ nurat_expt(VALUE self, VALUE other)
 		return f_rational_new_bang1(CLASS_OF(self), INT2FIX(f_odd_p(other) ? -1 : 1));
 	    }
 	    else if (f_zero_p(dat->num)) {
-		if (FIX2INT(f_cmp(other, ZERO)) == -1) {
+		if (FIX2INT(rb_fix_cmp(ZERO, other)) == 1) {
 		    rb_raise_zerodiv();
 		}
 		else {
@@ -1034,7 +1020,7 @@ nurat_expt(VALUE self, VALUE other)
 
 	    get_dat1(self);
 
-	    switch (FIX2INT(f_cmp(other, ZERO))) {
+	    switch (FIX2INT(rb_fix_cmp(other, ZERO))) {
 	      case 1:
 		num = INUM_POW(dat->num, other);
 		den = INUM_POW(dat->den, other);
