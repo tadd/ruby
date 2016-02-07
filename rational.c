@@ -1104,10 +1104,10 @@ nurat_cmp(VALUE self, VALUE other)
 		num2 = f_imul(FIX2LONG(bdat->num), FIX2LONG(adat->den));
 	    }
 	    else {
-		num1 = f_mul(adat->num, bdat->den);
-		num2 = f_mul(bdat->num, adat->den);
+		num1 = INUM_MUL(adat->num, bdat->den);
+		num2 = INUM_MUL(bdat->num, adat->den);
 	    }
-	    return f_cmp(f_sub(num1, num2), ZERO);
+	    return INUM_CMP(INUM_MINUS(num1, num2), ZERO);
 	}
     }
     else {
