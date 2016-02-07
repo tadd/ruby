@@ -1143,8 +1143,8 @@ nurat_eqeq_p(VALUE self, VALUE other)
 	    if (f_zero_p(adat->num) && f_zero_p(bdat->num))
 		return Qtrue;
 
-	    return f_boolcast(f_eqeq_p(adat->num, bdat->num) &&
-			      f_eqeq_p(adat->den, bdat->den));
+	    return f_boolcast(INUM_EQ(adat->num, bdat->num) &&
+			      INUM_EQ(adat->den, bdat->den));
 	}
     }
     else {
