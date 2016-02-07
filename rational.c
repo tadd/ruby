@@ -1215,7 +1215,7 @@ static VALUE
 nurat_floor(VALUE self)
 {
     get_dat1(self);
-    return f_idiv(dat->num, dat->den);
+    return INUM_IDIV(dat->num, dat->den);
 }
 
 static VALUE
