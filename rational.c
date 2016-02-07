@@ -1222,7 +1222,7 @@ static VALUE
 nurat_ceil(VALUE self)
 {
     get_dat1(self);
-    return f_negate(f_idiv(f_negate(dat->num), dat->den));
+    return INUM_NEGATE(INUM_IDIV(INUM_NEGATE(dat->num), dat->den));
 }
 
 /*
