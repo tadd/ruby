@@ -1258,17 +1258,17 @@ nurat_round(VALUE self)
 
     num = dat->num;
     den = dat->den;
-    neg = f_negative_p(num);
+    neg = INUM_NEGATIVE_P(num);
 
     if (neg)
-	num = f_negate(num);
+	num = INUM_NEGATE(num);
 
-    num = f_add(f_mul(num, TWO), den);
-    den = f_mul(den, TWO);
-    num = f_idiv(num, den);
+    num = INUM_PLUS(INUM_MUL(num, TWO), den);
+    den = INUM_MUL(den, TWO);
+    num = INUM_IDIV(num, den);
 
     if (neg)
-	num = f_negate(num);
+	num = INUM_NEGATE(num);
 
     return num;
 }
