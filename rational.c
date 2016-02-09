@@ -31,6 +31,7 @@
 #define INUM_MINUS(x, y) (FIXNUM_P(x) ? rb_fix_minus(x, y) : rb_big_minus(x, y))
 #define INUM_MUL(x, y) (FIXNUM_P(x) ? rb_fix_mul(x, y) : rb_big_mul(x, y))
 #define INUM_IDIV(x, y) (FIXNUM_P(x) ? rb_fix_idiv(x, y) : rb_big_idiv(x, y))
+#define INUM_FDIV(x, y) (FIXNUM_P(x) ? rb_fix_fdiv(x, y) : rb_big_fdiv(x, y))
 #define INUM_MOD(x, y) (FIXNUM_P(x) ? rb_fix_modulo(x, y) : rb_big_modulo(x, y))
 #define INUM_POW(x, y) (FIXNUM_P(x) ? rb_fix_pow(x, y) : rb_big_pow(x, y))
 #define INUM_EQ(x, y) (FIXNUM_P(x) ? f_boolcast(x == y) : rb_big_eq(x, y))
@@ -1421,7 +1422,7 @@ static VALUE
 nurat_to_f(VALUE self)
 {
     get_dat1(self);
-    return f_fdiv(dat->num, dat->den);
+    return INUM_FDIV(dat->num, dat->den);
 }
 
 /*
