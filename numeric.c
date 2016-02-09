@@ -3116,8 +3116,8 @@ fixdivmod(long x, long y, long *divp, long *modp)
  *
  */
 
-static VALUE
-fix_fdiv(VALUE x, VALUE y)
+VALUE
+rb_fix_fdiv(VALUE x, VALUE y)
 {
     if (FIXNUM_P(y)) {
 	return DBL2NUM((double)FIX2LONG(x) / (double)FIX2LONG(y));
@@ -4263,7 +4263,7 @@ Init_Numeric(void)
     rb_define_method(rb_cFixnum, "%", rb_fix_modulo, 1);
     rb_define_method(rb_cFixnum, "modulo", rb_fix_modulo, 1);
     rb_define_method(rb_cFixnum, "divmod", fix_divmod, 1);
-    rb_define_method(rb_cFixnum, "fdiv", fix_fdiv, 1);
+    rb_define_method(rb_cFixnum, "fdiv", rb_fix_fdiv, 1);
     rb_define_method(rb_cFixnum, "**", rb_fix_pow, 1);
 
     rb_define_method(rb_cFixnum, "abs", fix_abs, 0);

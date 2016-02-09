@@ -588,6 +588,7 @@ VALUE rb_fix_plus(VALUE, VALUE);
 VALUE rb_fix_minus(VALUE, VALUE);
 VALUE rb_fix_mul(VALUE, VALUE);
 VALUE rb_fix_idiv(VALUE, VALUE);
+VALUE rb_fix_fdiv(VALUE, VALUE);
 VALUE rb_fix_modulo(VALUE, VALUE);
 VALUE rb_fix_pow(VALUE, VALUE);
 VALUE rb_fix_cmp(VALUE, VALUE);
