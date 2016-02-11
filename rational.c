@@ -814,9 +814,9 @@ f_muldiv(VALUE self, VALUE anum, VALUE aden, VALUE bnum, VALUE bden, int k)
     if (k == '/') {
 	VALUE t;
 
-	if (f_negative_p(bnum)) {
-	    anum = f_negate(anum);
-	    bnum = f_negate(bnum);
+	if (INUM_NEGATIVE_P(bnum)) {
+	    anum = INUM_NEGATE(anum);
+	    bnum = INUM_NEGATE(bnum);
 	}
 	t = bnum;
 	bnum = bden;
