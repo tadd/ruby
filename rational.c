@@ -1804,7 +1804,7 @@ rb_rational_den(VALUE rat)
 static VALUE
 numeric_numerator(VALUE self)
 {
-    return f_numerator(f_to_r(self));
+    return nurat_numerator(f_to_r(self));
 }
 
 /*
@@ -1816,7 +1816,7 @@ numeric_numerator(VALUE self)
 static VALUE
 numeric_denominator(VALUE self)
 {
-    return f_denominator(f_to_r(self));
+    return nurat_denominator(f_to_r(self));
 }
 
 
