@@ -3647,7 +3647,7 @@ static VALUE fix_rshift(long, unsigned long);
  * Shifts +fix+ left +count+ positions, or right if +count+ is negative.
  */
 
-static VALUE
+VALUE
 rb_fix_lshift(VALUE x, VALUE y)
 {
     long val, width;
