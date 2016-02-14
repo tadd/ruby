@@ -1872,6 +1872,7 @@ integer_denominator(VALUE self)
     return INT2FIX(1);
 }
 
+static VALUE float_to_r(VALUE self);
 /*
  * call-seq:
  *    flo.numerator  ->  integer
@@ -1888,7 +1889,7 @@ float_numerator(VALUE self)
     double d = RFLOAT_VALUE(self);
     if (isinf(d) || isnan(d))
 	return self;
-    return rb_call_super(0, 0);
+    return nurat_numerator(float_to_r(self));
 }
 
 /*
@@ -1906,7 +1907,7 @@ float_denominator(VALUE self)
     double d = RFLOAT_VALUE(self);
     if (isinf(d) || isnan(d))
 	return INT2FIX(1);
-    return rb_call_super(0, 0);
+    return nurat_denominator(float_to_r(self));
 }
 
 /*
