@@ -36,6 +36,7 @@
 #define INUM_POW(x, y) (FIXNUM_P(x) ? rb_fix_pow(x, y) : rb_big_pow(x, y))
 #define INUM_EQ(x, y) (FIXNUM_P(x) ? f_boolcast(x == y) : rb_big_eq(x, y))
 #define INUM_CMP(x, y) (FIXNUM_P(x) ? rb_fix_cmp(x, y) : rb_big_cmp(x, y))
+#define INUM_LSHIFT(x, y) (FIXNUM_P(x) ? rb_fix_lshift(x, y) : rb_big_lshift(x, y))
 #define INUM_NEGATIVE_P(x) (FIXNUM_P(x) ? (FIX2LONG(x) < 0) : BIGNUM_NEGATIVE_P(x))
 #define INUM_NEGATE(x) (FIXNUM_P(x) ? LONG2NUM(-FIX2LONG(x)) : rb_big_uminus(x))
 #define INUM_ZERO_P(x) (FIXNUM_P(x) ? (FIX2LONG(x) == 0) : rb_bigzero_p(x))
@@ -2019,14 +2020,17 @@ float_to_r(VALUE self)
 	long ln = FIX2LONG(n);
 
 	if (ln == 0)
-	    return f_to_r(f);
+	    return rb_rational_new1(f);
 	if (ln > 0)
-	    return f_to_r(f_lshift(f, n));
+	    return rb_rational_new1(INUM_LSHIFT(f, n));
 	ln = -ln;
-	return rb_rational_new2(f, f_lshift(ONE, INT2FIX(ln)));
+	return rb_rational_new2(f, rb_fix_lshift(ONE, INT2FIX(ln)));
     }
 #else
-    return f_to_r(f_mul(f, f_expt(INT2FIX(FLT_RADIX), n)));
+    f = INUM_MUL(f, rb_fix_pow(INT2FIX(FLT_RADIX), n));
+    if (RB_TYPE_P(f, T_RATIONAL))
+	return f;
+    return rb_rational_new1(f);
 #endif
 }
 
