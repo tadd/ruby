@@ -2074,26 +2074,26 @@ rb_flt_rationalize(VALUE flt)
     {
         VALUE two_times_f, den;
 
-        two_times_f = f_mul(TWO, f);
-        den = f_lshift(ONE, f_sub(ONE, n));
+        two_times_f = rb_fix_mul(TWO, f);
+        den = rb_fix_lshift(ONE, rb_fix_minus(ONE, n));
 
-        a = rb_rational_new2(f_sub(two_times_f, ONE), den);
-        b = rb_rational_new2(f_add(two_times_f, ONE), den);
+        a = rb_rational_new2(INUM_MINUS(two_times_f, ONE), den);
+        b = rb_rational_new2(INUM_PLUS(two_times_f, ONE), den);
     }
 #else
     {
         VALUE radix_times_f, den;
 
-        radix_times_f = f_mul(INT2FIX(FLT_RADIX), f);
-        den = f_expt(INT2FIX(FLT_RADIX), f_sub(ONE, n));
+        radix_times_f = rb_fix_mul(INT2FIX(FLT_RADIX), f);
+        den = rb_fix_pow(INT2FIX(FLT_RADIX), rb_fix_minus(ONE, n));
 
-        a = rb_rational_new2(f_sub(radix_times_f, INT2FIX(FLT_RADIX - 1)), den);
-        b = rb_rational_new2(f_add(radix_times_f, INT2FIX(FLT_RADIX - 1)), den);
+        a = rb_rational_new2(INUM_MINUS(radix_times_f, INT2FIX(FLT_RADIX - 1)), den);
+        b = rb_rational_new2(INUM_PLUS(radix_times_f, INT2FIX(FLT_RADIX - 1)), den);
     }
 #endif
 
-    if (f_eqeq_p(a, b))
-        return f_to_r(flt);
+    if (nurat_eqeq_p(a, b))
+        return float_to_r(flt);
 
     nurat_rationalize_internal(a, b, &p, &q);
     return rb_rational_new2(p, q);
