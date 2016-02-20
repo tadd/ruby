@@ -43,7 +43,7 @@
 
 VALUE rb_cRational;
 
-static ID id_abs, id_eqeq_p, id_expt, id_fdiv,
+static ID id_abs, id_eqeq_p,
     id_idiv, id_integer_p, id_negate,
     id_to_i, id_i_num, id_i_den;
 
@@ -152,8 +152,6 @@ f_eqeq_p(VALUE x, VALUE y)
     return rb_funcall(x, id_eqeq_p, 1, y);
 }
 
-fun2(expt)
-fun2(fdiv)
 fun2(idiv)
 
 #define f_expt10(x) rb_fix_pow(INT2FIX(10), x)
@@ -1061,7 +1059,7 @@ nurat_expt(VALUE self, VALUE other)
 	return rb_float_pow(nurat_to_f(self), other);
     }
     else {
-	return rb_num_coerce_bin(self, other, id_expt);
+	return rb_num_coerce_bin(self, other, rb_intern("**"));
     }
 }
 
@@ -1844,7 +1842,7 @@ static VALUE
 numeric_quo(VALUE x, VALUE y)
 {
     if (RB_TYPE_P(y, T_FLOAT)) {
-        return f_fdiv(x, y);
+        return rb_funcall(x, rb_intern("fdiv"), 1, y);
     }
 
 #ifdef CANON
@@ -2522,8 +2520,6 @@ Init_Rational(void)
 
     id_abs = rb_intern("abs");
     id_eqeq_p = rb_intern("==");
-    id_expt = rb_intern("**");
-    id_fdiv = rb_intern("fdiv");
     id_idiv = rb_intern("div");
     id_integer_p = rb_intern("integer?");
     id_negate = rb_intern("-@");
