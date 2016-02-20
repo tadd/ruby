@@ -158,14 +158,6 @@ fun2(idiv)
 #define f_expt10(x) rb_fix_pow(INT2FIX(10), x)
 
 inline static VALUE
-f_negative_p(VALUE x)
-{
-    if (FIXNUM_P(x))
-	return f_boolcast(FIX2LONG(x) < 0);
-    return rb_funcall(x, '<', 1, ZERO);
-}
-
-inline static VALUE
 f_zero_p(VALUE x)
 {
     if (RB_TYPE_P(x, T_FIXNUM)) {
@@ -1594,8 +1586,8 @@ nurat_rationalize(int argc, VALUE *argv, VALUE self)
     if (argc == 0)
 	return self;
 
-    if (f_negative_p(self))
-	return f_negate(nurat_rationalize(argc, argv, f_abs(self)));
+    if (nurat_negative_p(self))
+	return nurat_negate(nurat_rationalize(argc, argv, nurat_negate(self)));
 
     rb_scan_args(argc, argv, "01", &e);
     e = f_abs(e);
