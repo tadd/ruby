@@ -37,6 +37,7 @@
 #define INUM_EQ(x, y) (FIXNUM_P(x) ? f_boolcast(x == y) : rb_big_eq(x, y))
 #define INUM_CMP(x, y) (FIXNUM_P(x) ? rb_fix_cmp(x, y) : rb_big_cmp(x, y))
 #define INUM_LSHIFT(x, y) (FIXNUM_P(x) ? rb_fix_lshift(x, y) : rb_big_lshift(x, y))
+#define INUM_POSITIVE_P(x) (FIXNUM_P(x) ? (FIX2LONG(x) > 0) : !BIGNUM_NEGATIVE_P(x))
 #define INUM_NEGATIVE_P(x) (FIXNUM_P(x) ? (FIX2LONG(x) < 0) : BIGNUM_NEGATIVE_P(x))
 #define INUM_NEGATE(x) (FIXNUM_P(x) ? LONG2NUM(-FIX2LONG(x)) : rb_big_uminus(x))
 #define INUM_ZERO_P(x) (FIXNUM_P(x) ? (FIX2LONG(x) == 0) : rb_bigzero_p(x))
@@ -1220,6 +1221,32 @@ nurat_true(VALUE self)
     return Qtrue;
 }
 #endif
+
+/*
+ *  call-seq:
+ *     rat.positive? ->  true or false
+ *
+ *  Returns +true+ if +rat+ is greater than 0.
+ */
+static VALUE
+nurat_positive_p(VALUE self)
+{
+    get_dat1(self);
+    return f_boolcast(INUM_POSITIVE_P(dat->num));
+}
+
+/*
+ *  call-seq:
+ *     rat.negative? ->  true or false
+ *
+ *  Returns +true+ if +rat+ is less than 0.
+ */
+static VALUE
+nurat_negative_p(VALUE self)
+{
+    get_dat1(self);
+    return f_boolcast(INUM_NEGATIVE_P(dat->num));
+}
 
 static VALUE
 nurat_floor(VALUE self)
@@ -2564,6 +2591,8 @@ Init_Rational(void)
     rb_define_method(rb_cRational, "rational?", nurat_true, 0);
     rb_define_method(rb_cRational, "exact?", nurat_true, 0);
 #endif
+    rb_define_method(rb_cRational, "positive?", nurat_positive_p, 0);
+    rb_define_method(rb_cRational, "negative?", nurat_negative_p, 0);
 
     rb_define_method(rb_cRational, "floor", nurat_floor_n, -1);
     rb_define_method(rb_cRational, "ceil", nurat_ceil_n, -1);
