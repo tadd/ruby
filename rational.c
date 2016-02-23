@@ -30,6 +30,7 @@
 #define INUM_PLUS(x, y) (FIXNUM_P(x) ? rb_fix_plus(x, y) : rb_big_plus(x, y))
 #define INUM_MINUS(x, y) (FIXNUM_P(x) ? rb_fix_minus(x, y) : rb_big_minus(x, y))
 #define INUM_MUL(x, y) (FIXNUM_P(x) ? rb_fix_mul(x, y) : rb_big_mul(x, y))
+#define INUM_DIV(x, y) (FIXNUM_P(x) ? rb_fix_div(x, y) : rb_big_div(x, y))
 #define INUM_IDIV(x, y) (FIXNUM_P(x) ? rb_fix_idiv(x, y) : rb_big_idiv(x, y))
 #define INUM_FDIV(x, y) (FIXNUM_P(x) ? rb_fix_fdiv(x, y) : rb_big_fdiv(x, y))
 #define INUM_MOD(x, y) (FIXNUM_P(x) ? rb_fix_modulo(x, y) : rb_big_modulo(x, y))
@@ -41,6 +42,7 @@
 #define INUM_NEGATIVE_P(x) (FIXNUM_P(x) ? (FIX2LONG(x) < 0) : BIGNUM_NEGATIVE_P(x))
 #define INUM_NEGATE(x) (FIXNUM_P(x) ? LONG2NUM(-FIX2LONG(x)) : rb_big_uminus(x))
 #define INUM_ZERO_P(x) (FIXNUM_P(x) ? (FIX2LONG(x) == 0) : rb_bigzero_p(x))
+#define INUM_ABS(x) (INUM_NEGATIVE_P(x) ? INUM_NEGATE(x) : x)
 
 VALUE rb_cRational;
 
@@ -88,6 +90,10 @@ f_div(VALUE x, VALUE y)
 {
     if (FIXNUM_P(y) && FIX2LONG(y) == 1)
 	return x;
+    if (FIXNUM_P(x))
+	return rb_fix_div(x, y);
+    if (RB_TYPE_P(x, T_BIGNUM))
+	return rb_big_div(x, y);
     return rb_funcall(x, '/', 1, y);
 }
 
@@ -121,7 +127,10 @@ f_mul(VALUE x, VALUE y)
 	}
 	else if (ix == 1)
 	    return y;
-    }
+	else
+	    return rb_fix_mul(x, y);
+    } else if (RB_TYPE_P(x, T_BIGNUM))
+	return rb_big_mul(x, y);
     return rb_funcall(x, '*', 1, y);
 }
 
@@ -133,7 +142,14 @@ f_sub(VALUE x, VALUE y)
     return rb_funcall(x, '-', 1, y);
 }
 
-fun1(abs)
+inline static VALUE
+f_abs(VALUE x)
+{
+    if (FIXNUM_P(x) || RB_TYPE_P(x, T_BIGNUM))
+	return INUM_ABS(x);
+    return rb_funcall(x, id_abs, 0);
+}
+
 fun1(integer_p)
 fun1(negate)
 
@@ -371,7 +387,7 @@ f_gcd(VALUE x, VALUE y)
 inline static VALUE
 f_lcm(VALUE x, VALUE y)
 {
-    if (f_zero_p(x) || f_zero_p(y))
+    if (INUM_ZERO_P(x) || INUM_ZERO_P(y))
 	return ZERO;
     return f_abs(f_mul(f_div(x, f_gcd(x, y)), y));
 }
