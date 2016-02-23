@@ -463,17 +463,16 @@ inline static void
 nurat_int_check(VALUE num)
 {
     if (!(RB_TYPE_P(num, T_FIXNUM) || RB_TYPE_P(num, T_BIGNUM))) {
-	if (!k_numeric_p(num) || !f_integer_p(num))
-	    rb_raise(rb_eTypeError, "not an integer");
+	rb_raise(rb_eTypeError, "not an Integer");
     }
 }
 
 inline static VALUE
 nurat_int_value(VALUE num)
 {
-    nurat_int_check(num);
     if (!k_integer_p(num))
 	num = f_to_i(num);
+    nurat_int_check(num);
     return num;
 }
 
