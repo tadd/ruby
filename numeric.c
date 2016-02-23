@@ -3177,8 +3177,8 @@ fix_divide(VALUE x, VALUE y, ID op)
  * +numeric+ and on the magnitude of the result. It may return a Bignum.
  */
 
-static VALUE
-fix_div(VALUE x, VALUE y)
+VALUE
+rb_fix_div(VALUE x, VALUE y)
 {
     return fix_divide(x, y, '/');
 }
@@ -4258,7 +4258,7 @@ Init_Numeric(void)
     rb_define_method(rb_cFixnum, "+", rb_fix_plus, 1);
     rb_define_method(rb_cFixnum, "-", rb_fix_minus, 1);
     rb_define_method(rb_cFixnum, "*", rb_fix_mul, 1);
-    rb_define_method(rb_cFixnum, "/", fix_div, 1);
+    rb_define_method(rb_cFixnum, "/", rb_fix_div, 1);
     rb_define_method(rb_cFixnum, "div", rb_fix_idiv, 1);
     rb_define_method(rb_cFixnum, "%", rb_fix_modulo, 1);
     rb_define_method(rb_cFixnum, "modulo", rb_fix_modulo, 1);
