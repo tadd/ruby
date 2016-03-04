@@ -1356,6 +1356,17 @@ int rb_gc_for_fd(int err);
 
 /* numeric.c (export) */
 VALUE rb_int_positive_pow(long x, unsigned long y);
+VALUE rb_fix_plus(VALUE, VALUE);
+VALUE rb_fix_minus(VALUE, VALUE);
+VALUE rb_fix_mul(VALUE, VALUE);
+VALUE rb_fix_div(VALUE, VALUE);
+VALUE rb_fix_idiv(VALUE, VALUE);
+VALUE rb_fix_fdiv(VALUE, VALUE);
+VALUE rb_fix_modulo(VALUE, VALUE);
+VALUE rb_fix_pow(VALUE, VALUE);
+VALUE rb_fix_cmp(VALUE, VALUE);
+VALUE rb_fix_lshift(VALUE, VALUE);
+VALUE rb_float_pow(VALUE, VALUE);
 
 /* process.c (export) */
 int rb_exec_async_signal_safe(const struct rb_execarg *e, char *errmsg, size_t errmsg_buflen);
