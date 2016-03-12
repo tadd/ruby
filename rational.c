@@ -1346,7 +1346,7 @@ f_round_common(int argc, VALUE *argv, VALUE self, VALUE (*func)(VALUE))
 
     s = nurat_div(f_rational_new_bang1(CLASS_OF(self), s), b);
 
-    if (FIX2INT(INUM_CMP(n, ONE)) < 0)
+    if (RB_TYPE_P(s, T_RATIONAL) && FIX2INT(INUM_CMP(n, ONE)) < 0)
 	s = nurat_truncate(s);
 
     return s;
