@@ -6228,6 +6228,20 @@ rb_ary_any_p(int argc, VALUE *argv, VALUE ary)
     return Qfalse;
 }
 
+
+static VALUE
+nil_all_p(VALUE ary)
+{
+    static bool initialized = false;
+    static VALUE nils[RARRAY_EMBED_LEN_MAX];
+
+    if (!initialized) {
+        rb_mem_clear(nils, RARRAY_EMBED_LEN_MAX);
+        initialized = true;
+    }
+    return memcmp(ARY_EMBED_PTR(ary), nils, sizeof(VALUE) * ARY_EMBED_LEN(ary)) == 0;
+}
+
 /*
  *  call-seq:
  *     ary.all? [{|obj| block}  ]   -> true or false
@@ -6246,6 +6260,9 @@ rb_ary_all_p(int argc, VALUE *argv, VALUE ary)
     if (argc) {
         if (rb_block_given_p()) {
             rb_warn("given block not used");
+        }
+        if (NIL_P(argv[0]) && ARY_EMBED_P(ary)) { /* can be optimized */
+            return nil_all_p(ary) ? Qtrue: Qfalse;
         }
         for (i = 0; i < RARRAY_LEN(ary); ++i) {
             if (!RTEST(rb_funcall(argv[0], idEqq, 1, RARRAY_AREF(ary, i)))) return Qfalse;
