@@ -3740,6 +3740,50 @@ vm_method_cfunc_entry(const rb_callable_method_entry_t *me)
 }
 
 static VALUE
+vm_call_cfunc_invoke(int invoker_id, VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+{
+    static const VALUE (*invokers[])(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS)) = {
+        call_cfunc_m2,
+        call_cfunc_m1,
+        call_cfunc_0,
+        call_cfunc_1,
+        call_cfunc_2,
+        call_cfunc_3,
+        call_cfunc_4,
+        call_cfunc_5,
+        call_cfunc_6,
+        call_cfunc_7,
+        call_cfunc_8,
+        call_cfunc_9,
+        call_cfunc_10,
+        call_cfunc_11,
+        call_cfunc_12,
+        call_cfunc_13,
+        call_cfunc_14,
+        call_cfunc_15,
+        ractor_safe_call_cfunc_m2,
+        ractor_safe_call_cfunc_m1,
+        ractor_safe_call_cfunc_0,
+        ractor_safe_call_cfunc_1,
+        ractor_safe_call_cfunc_2,
+        ractor_safe_call_cfunc_3,
+        ractor_safe_call_cfunc_4,
+        ractor_safe_call_cfunc_5,
+        ractor_safe_call_cfunc_6,
+        ractor_safe_call_cfunc_7,
+        ractor_safe_call_cfunc_8,
+        ractor_safe_call_cfunc_9,
+        ractor_safe_call_cfunc_10,
+        ractor_safe_call_cfunc_11,
+        ractor_safe_call_cfunc_12,
+        ractor_safe_call_cfunc_13,
+        ractor_safe_call_cfunc_14,
+        ractor_safe_call_cfunc_15,
+    };
+    return (*invokers[invoker_id])(recv, argc, argv, func);
+}
+
+static VALUE
 vm_call_cfunc_with_frame_(rb_execution_context_t *ec, rb_control_frame_t *reg_cfp, struct rb_calling_info *calling,
                           int argc, VALUE *argv, VALUE *stack_bottom)
 {
@@ -3771,7 +3815,7 @@ vm_call_cfunc_with_frame_(rb_execution_context_t *ec, rb_control_frame_t *reg_cf
     if (len >= 0) rb_check_arity(argc, len, len);
 
     reg_cfp->sp = stack_bottom;
-    val = (*cfunc->invoker)(recv, argc, argv, cfunc->func);
+    val = vm_call_cfunc_invoke(cfunc->invoker_id, recv, argc, argv, cfunc->func);
 
     CHECK_CFP_CONSISTENCY("vm_call_cfunc");
 

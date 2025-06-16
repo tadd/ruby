@@ -161,7 +161,7 @@ vm_call0_cfunc_with_frame(rb_execution_context_t* ec, struct rb_calling_info *ca
 
         if (len >= 0) rb_check_arity(argc, len, len);
 
-        val = (*cfunc->invoker)(recv, argc, argv, cfunc->func);
+        val = vm_call_cfunc_invoke(cfunc->invoker_id, recv, argc, argv, cfunc->func);
 
         CHECK_CFP_CONSISTENCY("vm_call0_cfunc_with_frame");
         rb_vm_pop_frame(ec);
