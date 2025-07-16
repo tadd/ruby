@@ -62,20 +62,20 @@ redblack_right(redblack_node_t *node)
 static redblack_node_t *
 redblack_find(redblack_node_t *tree, ID key)
 {
-    if (tree == LEAF) {
-        return LEAF;
-    }
-    RUBY_ASSERT(redblack_left(tree) == LEAF || redblack_left(tree)->key < tree->key);
-    RUBY_ASSERT(redblack_right(tree) == LEAF || redblack_right(tree)->key > tree->key);
+    while (tree != LEAF) {
+        RUBY_ASSERT(redblack_left(tree) == LEAF || redblack_left(tree)->key < tree->key);
+        RUBY_ASSERT(redblack_right(tree) == LEAF || redblack_right(tree)->key > tree->key);
 
-    if (tree->key == key) {
-        return tree;
+        if (tree->key == key) {
+            break;
+        }
+        if (key < tree->key) {
+            tree = redblack_left(tree);
+        } else {
+            tree = redblack_right(tree);
+        }
     }
-    if (key < tree->key) {
-        return redblack_find(redblack_left(tree), key);
-    } else {
-        return redblack_find(redblack_right(tree), key);
-    }
+    return tree;
 }
 
 static inline rb_shape_t *
