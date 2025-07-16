@@ -22,9 +22,11 @@
 
  (makefile-mode . ((indent-tabs-mode . t)))
 
- (c-mode . ((c-file-style . "ruby")))
+ (c-mode . ((c-file-style . "ruby")
+            (eval . (remove-hook c-mode-hook 'lsp-deferred))))
 
- (c++-mode . ((c-file-style . "ruby")))
+ (c++-mode . ((c-file-style . "ruby")
+              (eval . (remove-hook c-mode-hook 'lsp-deferred))))
 
  (change-log-mode .
      ((buffer-file-coding-system . us-ascii)
