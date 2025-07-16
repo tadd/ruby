@@ -929,13 +929,13 @@ shape_get_next(rb_shape_t *shape, VALUE obj, ID id, bool emit_warnings)
     return new_shape;
 }
 
-shape_id_t
-rb_shape_transition_add_ivar(VALUE obj, ID id)
+static shape_id_t
+shape_transition_add_ivar(VALUE obj, ID id, bool emit_warnings)
 {
     shape_id_t original_shape_id = RBASIC_SHAPE_ID(obj);
     RUBY_ASSERT(!shape_frozen_p(original_shape_id));
 
-    rb_shape_t *next_shape = shape_get_next(RSHAPE(original_shape_id), obj, id, true);
+    rb_shape_t *next_shape = shape_get_next(RSHAPE(original_shape_id), obj, id, emit_warnings);
     if (next_shape) {
         return shape_id(next_shape, original_shape_id);
     }
@@ -945,18 +945,15 @@ rb_shape_transition_add_ivar(VALUE obj, ID id)
 }
 
 shape_id_t
+rb_shape_transition_add_ivar(VALUE obj, ID id)
+{
+    return shape_transition_add_ivar(obj, id, true);
+}
+
+shape_id_t
 rb_shape_transition_add_ivar_no_warnings(VALUE obj, ID id)
 {
-    shape_id_t original_shape_id = RBASIC_SHAPE_ID(obj);
-    RUBY_ASSERT(!shape_frozen_p(original_shape_id));
-
-    rb_shape_t *next_shape = shape_get_next(RSHAPE(original_shape_id), obj, id, false);
-    if (next_shape) {
-        return shape_id(next_shape, original_shape_id);
-    }
-    else {
-        return transition_complex(original_shape_id);
-    }
+    return shape_transition_add_ivar(obj, id, false);
 }
 
 // Same as rb_shape_get_iv_index, but uses a provided valid shape id and index
