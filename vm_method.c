@@ -864,7 +864,7 @@ static inline rb_method_entry_t *search_method(VALUE klass, ID id, VALUE *define
 extern int rb_method_definition_eq(const rb_method_definition_t *d1, const rb_method_definition_t *d2);
 
 static VALUE
-(*call_cfunc_invoker_func(int argc))(VALUE recv, int argc, const VALUE *, VALUE (*func)(ANYARGS))
+(*call_cfunc_invoker_func(int argc))(VALUE recv, int argc, const VALUE *, VALUE (*func)(ANYARGS), int func_argc)
 {
     if (!GET_THREAD()->ext_config.ractor_safe) {
         switch (argc) {

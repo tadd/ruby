@@ -3519,271 +3519,307 @@ ractor_unsafe_check(void)
 }
 
 static VALUE
-call_cfunc_m2(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+call_cfunc_m2(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(-2, func_argc, func_argc);
     ractor_unsafe_check();
     VALUE(*f)(VALUE, VALUE) = (VALUE(*)(VALUE, VALUE))func;
     return (*f)(recv, rb_ary_new4(argc, argv));
 }
 
 static VALUE
-call_cfunc_m1(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+call_cfunc_m1(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(-1, func_argc, func_argc);
     ractor_unsafe_check();
     VALUE(*f)(int, const VALUE *, VALUE) = (VALUE(*)(int, const VALUE *, VALUE))func;
     return (*f)(argc, argv, recv);
 }
 
 static VALUE
-call_cfunc_0(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+call_cfunc_0(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(0, func_argc, func_argc);
     ractor_unsafe_check();
     VALUE(*f)(VALUE) = (VALUE(*)(VALUE))func;
     return (*f)(recv);
 }
 
 static VALUE
-call_cfunc_1(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+call_cfunc_1(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(1, func_argc, func_argc);
     ractor_unsafe_check();
     VALUE(*f)(VALUE, VALUE) = (VALUE(*)(VALUE, VALUE))func;
     return (*f)(recv, argv[0]);
 }
 
 static VALUE
-call_cfunc_2(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+call_cfunc_2(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(2, func_argc, func_argc);
     ractor_unsafe_check();
     VALUE(*f)(VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1]);
 }
 
 static VALUE
-call_cfunc_3(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+call_cfunc_3(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(3, func_argc, func_argc);
     ractor_unsafe_check();
     VALUE(*f)(VALUE, VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1], argv[2]);
 }
 
 static VALUE
-call_cfunc_4(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+call_cfunc_4(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(4, func_argc, func_argc);
     ractor_unsafe_check();
     VALUE(*f)(VALUE, VALUE, VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1], argv[2], argv[3]);
 }
 
 static VALUE
-call_cfunc_5(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+call_cfunc_5(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(5, func_argc, func_argc);
     ractor_unsafe_check();
     VALUE(*f)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1], argv[2], argv[3], argv[4]);
 }
 
 static VALUE
-call_cfunc_6(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+call_cfunc_6(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(6, func_argc, func_argc);
     ractor_unsafe_check();
     VALUE(*f)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1], argv[2], argv[3], argv[4], argv[5]);
 }
 
 static VALUE
-call_cfunc_7(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+call_cfunc_7(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(7, func_argc, func_argc);
     ractor_unsafe_check();
     VALUE(*f)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1], argv[2], argv[3], argv[4], argv[5], argv[6]);
 }
 
 static VALUE
-call_cfunc_8(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+call_cfunc_8(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(8, func_argc, func_argc);
     ractor_unsafe_check();
     VALUE(*f)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7]);
 }
 
 static VALUE
-call_cfunc_9(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+call_cfunc_9(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(9, func_argc, func_argc);
     ractor_unsafe_check();
     VALUE(*f)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8]);
 }
 
 static VALUE
-call_cfunc_10(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+call_cfunc_10(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(10, func_argc, func_argc);
     ractor_unsafe_check();
     VALUE(*f)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9]);
 }
 
 static VALUE
-call_cfunc_11(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+call_cfunc_11(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(11, func_argc, func_argc);
     ractor_unsafe_check();
     VALUE(*f)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9], argv[10]);
 }
 
 static VALUE
-call_cfunc_12(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+call_cfunc_12(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(12, func_argc, func_argc);
     ractor_unsafe_check();
     VALUE(*f)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9], argv[10], argv[11]);
 }
 
 static VALUE
-call_cfunc_13(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+call_cfunc_13(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(13, func_argc, func_argc);
     ractor_unsafe_check();
     VALUE(*f)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9], argv[10], argv[11], argv[12]);
 }
 
 static VALUE
-call_cfunc_14(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+call_cfunc_14(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(14, func_argc, func_argc);
     ractor_unsafe_check();
     VALUE(*f)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9], argv[10], argv[11], argv[12], argv[13]);
 }
 
 static VALUE
-call_cfunc_15(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+call_cfunc_15(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(15, func_argc, func_argc);
     ractor_unsafe_check();
     VALUE(*f)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9], argv[10], argv[11], argv[12], argv[13], argv[14]);
 }
 
 static VALUE
-ractor_safe_call_cfunc_m2(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+ractor_safe_call_cfunc_m2(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(-2, func_argc, func_argc);
     VALUE(*f)(VALUE, VALUE) = (VALUE(*)(VALUE, VALUE))func;
     return (*f)(recv, rb_ary_new4(argc, argv));
 }
 
 static VALUE
-ractor_safe_call_cfunc_m1(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+ractor_safe_call_cfunc_m1(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(-1, func_argc, func_argc);
     VALUE(*f)(int, const VALUE *, VALUE) = (VALUE(*)(int, const VALUE *, VALUE))func;
     return (*f)(argc, argv, recv);
 }
 
 static VALUE
-ractor_safe_call_cfunc_0(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+ractor_safe_call_cfunc_0(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(0, func_argc, func_argc);
     VALUE(*f)(VALUE) = (VALUE(*)(VALUE))func;
     return (*f)(recv);
 }
 
 static VALUE
-ractor_safe_call_cfunc_1(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+ractor_safe_call_cfunc_1(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(1, func_argc, func_argc);
     VALUE(*f)(VALUE, VALUE) = (VALUE(*)(VALUE, VALUE))func;
     return (*f)(recv, argv[0]);
 }
 
 static VALUE
-ractor_safe_call_cfunc_2(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+ractor_safe_call_cfunc_2(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(2, func_argc, func_argc);
     VALUE(*f)(VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1]);
 }
 
 static VALUE
-ractor_safe_call_cfunc_3(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+ractor_safe_call_cfunc_3(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(3, func_argc, func_argc);
     VALUE(*f)(VALUE, VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1], argv[2]);
 }
 
 static VALUE
-ractor_safe_call_cfunc_4(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+ractor_safe_call_cfunc_4(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(4, func_argc, func_argc);
     VALUE(*f)(VALUE, VALUE, VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1], argv[2], argv[3]);
 }
 
 static VALUE
-ractor_safe_call_cfunc_5(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+ractor_safe_call_cfunc_5(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(5, func_argc, func_argc);
     VALUE(*f)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1], argv[2], argv[3], argv[4]);
 }
 
 static VALUE
-ractor_safe_call_cfunc_6(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+ractor_safe_call_cfunc_6(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(6, func_argc, func_argc);
     VALUE(*f)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1], argv[2], argv[3], argv[4], argv[5]);
 }
 
 static VALUE
-ractor_safe_call_cfunc_7(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+ractor_safe_call_cfunc_7(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(7, func_argc, func_argc);
     VALUE(*f)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1], argv[2], argv[3], argv[4], argv[5], argv[6]);
 }
 
 static VALUE
-ractor_safe_call_cfunc_8(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+ractor_safe_call_cfunc_8(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(8, func_argc, func_argc);
     VALUE(*f)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7]);
 }
 
 static VALUE
-ractor_safe_call_cfunc_9(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+ractor_safe_call_cfunc_9(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(9, func_argc, func_argc);
     VALUE(*f)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8]);
 }
 
 static VALUE
-ractor_safe_call_cfunc_10(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+ractor_safe_call_cfunc_10(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(10, func_argc, func_argc);
     VALUE(*f)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9]);
 }
 
 static VALUE
-ractor_safe_call_cfunc_11(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+ractor_safe_call_cfunc_11(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(11, func_argc, func_argc);
     VALUE(*f)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9], argv[10]);
 }
 
 static VALUE
-ractor_safe_call_cfunc_12(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+ractor_safe_call_cfunc_12(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(12, func_argc, func_argc);
     VALUE(*f)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9], argv[10], argv[11]);
 }
 
 static VALUE
-ractor_safe_call_cfunc_13(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+ractor_safe_call_cfunc_13(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(13, func_argc, func_argc);
     VALUE(*f)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9], argv[10], argv[11], argv[12]);
 }
 
 static VALUE
-ractor_safe_call_cfunc_14(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+ractor_safe_call_cfunc_14(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(14, func_argc, func_argc);
     VALUE(*f)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9], argv[10], argv[11], argv[12], argv[13]);
 }
 
 static VALUE
-ractor_safe_call_cfunc_15(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS))
+ractor_safe_call_cfunc_15(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc)
 {
+    if (func_argc >= 0) rb_check_arity(15, func_argc, func_argc);
     VALUE(*f)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE) = (VALUE(*)(VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE, VALUE))func;
     return (*f)(recv, argv[0], argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9], argv[10], argv[11], argv[12], argv[13], argv[14]);
 }
@@ -3860,11 +3896,11 @@ vm_call_cfunc_with_frame_(rb_execution_context_t *ec, rb_control_frame_t *reg_cf
                   block_handler, (VALUE)me,
                   0, ec->cfp->sp, 0, 0);
 
-    int len = cfunc->argc;
-    if (len >= 0) rb_check_arity(argc, len, len);
+    // int len = cfunc->argc;
+    // if (len >= 0) rb_check_arity(argc, len, len);
 
     reg_cfp->sp = stack_bottom;
-    val = (*cfunc->invoker)(recv, argc, argv, cfunc->func);
+    val = (*cfunc->invoker)(recv, argc, argv, cfunc->func, cfunc->argc);
 
     CHECK_CFP_CONSISTENCY("vm_call_cfunc");
 

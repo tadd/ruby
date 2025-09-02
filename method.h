@@ -140,7 +140,7 @@ typedef struct rb_method_iseq_struct {
 typedef VALUE (*rb_cfunc_t)(ANYARGS);
 typedef struct rb_method_cfunc_struct {
     rb_cfunc_t func;
-    VALUE (*invoker)(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS));
+    VALUE (*invoker)(VALUE recv, int argc, const VALUE *argv, VALUE (*func)(ANYARGS), int func_argc);
     int argc;
 } rb_method_cfunc_t;
 

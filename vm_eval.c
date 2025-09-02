@@ -159,9 +159,9 @@ vm_call0_cfunc_with_frame(rb_execution_context_t* ec, struct rb_calling_info *ca
                       block_handler, (VALUE)me,
                       0, reg_cfp->sp, 0, 0);
 
-        if (len >= 0) rb_check_arity(argc, len, len);
+        // if (len >= 0) rb_check_arity(argc, len, len);
 
-        val = (*cfunc->invoker)(recv, argc, argv, cfunc->func);
+        val = (*cfunc->invoker)(recv, argc, argv, cfunc->func, len);
 
         CHECK_CFP_CONSISTENCY("vm_call0_cfunc_with_frame");
         rb_vm_pop_frame(ec);
